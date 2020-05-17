@@ -1,0 +1,10 @@
+north-east,small,125,200,market
+south-west,medium,250,400,residential area
+south-east,large,350,700,forest
+north-west,medium,130,260,mountains
+center,hudge,600,1300,front gate
+levitating,large,400,890,stables
+east,huge,400,4000,tower
+west,medium,250,3200,tower
+south,medium,230,2700,tower
+mircea,mircea,0,0,mircea
