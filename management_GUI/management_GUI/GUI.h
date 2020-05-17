@@ -12,7 +12,7 @@ private:
 	Watchman& watchman;
 	QLineEdit* location_line, * size_line, * aura_level_line, * parts_line, * vision_line;
 	QListWidget* list_turrets_widget;
-	QPushButton* add_turret_button, * delete_button;
+	QPushButton* add_turret_button, * delete_button, * update_button;
 
 public:
 	GUI(Service& s, Watchman& w);
@@ -25,4 +25,7 @@ private:
 
 	void add_turret();
 	void delete_turret();
+	void update_turret();
+
+	bool validate_input(string location, string size, int aura_level, int parts, string vision);
 };

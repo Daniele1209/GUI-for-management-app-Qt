@@ -21,6 +21,7 @@ void GUI::init_GUI() {
 	this->list_turrets_widget = new QListWidget{};
 	this->add_turret_button = new QPushButton{"Add"};
 	this->delete_button = new QPushButton{"Delete"};
+	this->update_button = new QPushButton{ "Update" };
 
 	QVBoxLayout* main_layout = new QVBoxLayout{ this };
 	main_layout->addWidget(this->list_turrets_widget);
@@ -37,6 +38,7 @@ void GUI::init_GUI() {
 	QGridLayout* buttons_layout = new QGridLayout{};
 	buttons_layout->addWidget(this->add_turret_button, 0, 0);
 	buttons_layout->addWidget(this->delete_button, 0, 1);
+	buttons_layout->addWidget(this->update_button, 0, 2);
 	main_layout->addLayout(buttons_layout);
 }
 
@@ -63,6 +65,7 @@ void GUI::connect_signals() {
 
 	QObject::connect(this->add_turret_button, &QPushButton::clicked, this, &GUI::add_turret);
 	QObject::connect(this->delete_button, &QPushButton::clicked, this, &GUI::delete_turret);
+	QObject::connect(this->update_button, &QPushButton::clicked, this, &GUI::update_turret);
 }
 
 int GUI::get_selected() const {
@@ -87,6 +90,16 @@ void GUI::add_turret() {
 	int aura_level = this->aura_level_line->text().toInt();
 	int parts = this->parts_line->text().toInt();
 	string vision = this->vision_line->text().toStdString();
+	//validate the input data 
+	if (!this->validate_input(location, size, aura_level, parts, vision))
+		return;
+	//check if turret already exists
+	for (auto turr : this->service.get_turret()) {
+		if (turr.get_location() == location) {
+			QMessageBox::critical(this, "Error", "Turret already exists !");
+			return;
+		}
+	}
 
 	this->service.add_turret_repo(location, size, aura_level, parts, vision);
 	//syncronise the repo with the gui list that is displayed
@@ -101,8 +114,57 @@ void GUI::delete_turret() {
 		QMessageBox::critical(this, "Error", "No Turret selected !");
 		return;
 	}
+
 	Turret turr = this->service.get_turret()[selected];
 	this->service.delete_turret_list(turr.get_location());
 	//update the gui list
 	this->populate_list();
+}
+
+void GUI::update_turret() {
+	int selected = this->get_selected();
+	if (selected < 0) {
+		QMessageBox::critical(this, "Error", "No Turret selected !");
+		return;
+	}
+	string location = this->location_line->text().toStdString();
+	string size = this->size_line->text().toStdString();
+	int aura_level = this->aura_level_line->text().toInt();
+	int parts = this->parts_line->text().toInt();
+	string vision = this->vision_line->text().toStdString();
+	//validate the input data 
+	if (!this->validate_input(location, size, aura_level, parts, vision))
+		return;
+
+	this->service.update_list(location, size, aura_level, parts, vision);
+	//update the gui list
+	this->populate_list();
+	int last_elem = this->service.get_turret().size() - 1;
+	this->list_turrets_widget->setCurrentRow(last_elem);
+
+}
+
+bool GUI::validate_input(string location, string size, int aura_level, int parts, string vision) {
+
+	if (location.empty()) {
+		QMessageBox::critical(this, "Error", "Empty location !");
+		return false;
+	}
+	if (size.empty()) {
+		QMessageBox::critical(this, "Error", "Empty size !");
+		return false;
+	}
+	if (aura_level == 0) {
+		QMessageBox::critical(this, "Error", "Empty aura level !");
+		return false;
+	}
+	if (parts == 0) {
+		QMessageBox::critical(this, "Error", "Empty parts !");
+		return false;
+	}
+	if (vision.empty()) {
+		QMessageBox::critical(this, "Error", "Empty vision !");
+		return false;
+	}
+	return true;
 }
