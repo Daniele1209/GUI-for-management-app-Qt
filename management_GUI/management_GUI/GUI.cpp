@@ -3,6 +3,7 @@
 #include <qformlayout.h>
 #include <qgridlayout.h>
 #include <qmessagebox.h>
+#include <qcoreapplication>
 
 using namespace std;
 
@@ -22,6 +23,7 @@ void GUI::init_GUI() {
 	this->add_turret_button = new QPushButton{"Add"};
 	this->delete_button = new QPushButton{"Delete"};
 	this->update_button = new QPushButton{ "Update" };
+	this->exit_button = new QPushButton{ "Exit" };
 
 	QVBoxLayout* main_layout = new QVBoxLayout{ this };
 	main_layout->addWidget(this->list_turrets_widget);
@@ -39,6 +41,7 @@ void GUI::init_GUI() {
 	buttons_layout->addWidget(this->add_turret_button, 0, 0);
 	buttons_layout->addWidget(this->delete_button, 0, 1);
 	buttons_layout->addWidget(this->update_button, 0, 2);
+	buttons_layout->addWidget(this->exit_button, 0, 3);
 	main_layout->addLayout(buttons_layout);
 }
 
@@ -66,6 +69,7 @@ void GUI::connect_signals() {
 	QObject::connect(this->add_turret_button, &QPushButton::clicked, this, &GUI::add_turret);
 	QObject::connect(this->delete_button, &QPushButton::clicked, this, &GUI::delete_turret);
 	QObject::connect(this->update_button, &QPushButton::clicked, this, &GUI::update_turret);
+	QObject::connect(this->exit_button, SIGNAL(clicked()), qApp, SLOT(quit()));
 }
 
 int GUI::get_selected() const {

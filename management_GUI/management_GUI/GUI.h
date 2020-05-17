@@ -12,7 +12,7 @@ private:
 	Watchman& watchman;
 	QLineEdit* location_line, * size_line, * aura_level_line, * parts_line, * vision_line;
 	QListWidget* list_turrets_widget;
-	QPushButton* add_turret_button, * delete_button, * update_button;
+	QPushButton* add_turret_button, * delete_button, * update_button, * exit_button;
 
 public:
 	GUI(Service& s, Watchman& w);
