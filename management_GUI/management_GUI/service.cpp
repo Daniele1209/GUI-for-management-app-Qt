@@ -16,8 +16,12 @@ void Service::delete_turret_list(std::string command) {
 	this->repo.delete_turret(remove);
 }
 
-std::vector<Turret> Service::get_turret() {
+vector<Turret> Service::get_turret() {
 	return this->repo.get_turrets();
+}
+
+Turret Service::turret_at_index(int index) {
+	return this->repo.turret_at_pos(index);
 }
 
 int Service::get_repo_size() {

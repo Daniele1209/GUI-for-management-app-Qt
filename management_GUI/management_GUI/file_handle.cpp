@@ -40,6 +40,13 @@ Turret watchman_repo::find_turret(string location) {
 	throw repo_exception("Turret not found ! :(\n");
 }
 
+bool watchman_repo::exists(string location) {
+	for (auto turr : turrets)
+		if (turr.get_location() == location)
+			return true;
+	return false;
+}
+
 void watchman_HTML::save_file(const vector<Turret>& t) {
 	if (this->f_path.size() == 0)
 		throw repo_exception("File path for HTML not set !\n");

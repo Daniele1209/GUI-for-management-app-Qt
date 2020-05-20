@@ -19,22 +19,32 @@ void Watchman::add_turret_mylist(string elements) {
 	mylist.add_to_mylist(turr);
 }
 
+Turret Watchman::find_from_list(string location) {
+	Turret turr = this->repo.find_turret(location);
+
+	return turr;
+}
+
+bool Watchman::check(string location) {
+	if (this->mylist.exists(location))
+		return true;
+	return false;
+}
+
 vector<Turret> Watchman::turret_list(string size, int parts) {
-	index = 0;
-	vector<Turret> turrets = repo.get_turrets();
+	bool ok = true;
+	vector<Turret> turrets = this->repo.get_turrets();
 	vector<Turret> list;
-	for (auto turr : turrets) {
+	for (Turret turr : turrets) {
 		if(turr.get_parts() < parts)
 			if (turr.get_size() == size) {
-				list[index] = turr;
-				index++;
+				list.push_back(turr);
+				ok = false;
 			}
 	}
-	if (index == 0)
+	if (ok)
 		throw service_exception("No such items were found !\n");
-	else {
-		return list;
-	}
+	return list;
 }
 
 vector<Turret> Watchman::get_turret_list() {

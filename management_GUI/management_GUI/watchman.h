@@ -17,4 +17,6 @@ public:
 	std::vector<Turret> turret_list(std::string size, int parts);
 	void add_turret_mylist(std::string elements);
 	std::vector<Turret> get_turret_list();
+	Turret find_from_list(string location);
+	bool check(string location);
 };

@@ -23,6 +23,7 @@ public:
 
 	Turret turret_at_pos(int pos);
 	Turret find_turret(string location);
+	bool exists(string location);
 
 	vector<Turret> get_all();
 };

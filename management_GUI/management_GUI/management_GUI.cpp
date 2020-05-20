@@ -2,12 +2,16 @@
 
 using namespace std;
 
-management_GUI::management_GUI(Service& s, QWidget* parent)
-	: QMainWindow(parent), service{ s }
+management_GUI::management_GUI(Watchman& w, Service& s, QWidget* parent)
+	: QMainWindow(parent), service{ s }, watchman{ w }
 {
 	ui.setupUi(this);
+	//admin
 	this->populate_list();
 	this->connect_signal_slots();
+
+	//user
+	this->populate_mylist();
 }
 
 void management_GUI::populate_list() {
@@ -34,6 +38,9 @@ void management_GUI::connect_signal_slots() {
 		this->ui.vision_line->setText(QString::fromStdString(turr.get_vision()));
 
 		});
+	QObject::connect(this->ui.save_button, &QPushButton::clicked, this, &management_GUI::save_turret);
+	QObject::connect(this->ui.next_button, &QPushButton::clicked, this, &management_GUI::next_turret);
+	QObject::connect(this->ui.filter_button, &QPushButton::clicked, this, &management_GUI::filter_list);
 }
 
 void management_GUI::delete_turret() {
@@ -135,4 +142,68 @@ bool management_GUI::validate_input(string location, string size, int aura_level
 		return false;
 	}
 	return true;
+}
+
+
+//functions for user mode
+
+void management_GUI::populate_mylist() {
+	this->ui.mylist_list->clear();
+	vector<Turret> turrets = this->watchman.get_turret_list();
+	for (auto turr : turrets)
+		this->ui.mylist_list->addItem(QString::fromStdString(turr.get_location()));
+}
+
+void management_GUI::next_turret() {
+	Turret curr_turret = this->watchman.next();
+	this->ui.location_line_u->setText(QString::fromStdString(curr_turret.get_location()));
+	this->ui.size_line_u->setText(QString::fromStdString(curr_turret.get_size()));
+	this->ui.aura_level_line_u->setText(QString::fromStdString(to_string(curr_turret.get_aura_level())));
+	this->ui.parts_line_u->setText(QString::fromStdString(to_string(curr_turret.get_parts())));
+	this->ui.vision_line_u->setText(QString::fromStdString(curr_turret.get_vision()));
+
+}
+
+void management_GUI::save_turret() {
+	string location = this->ui.location_line_u->text().toStdString();
+	if (location.empty()) {
+		QMessageBox::critical(this, "Error", "Turret is missing !");
+		return;
+	}
+	
+	if (this->watchman.check(location) == true) {
+		QMessageBox::critical(this, "Error", "Turret already in list !");
+		return;
+	}
+
+	this->watchman.add_turret_mylist(location);
+	//syncronise the repo with the gui list that is displayed
+	this->populate_mylist();
+	int last_elem = this->watchman.get_turret_list().size() - 1;
+	this->ui.turret_list_widget->setCurrentRow(last_elem);
+}
+
+void management_GUI::filter_list() {
+	bool ok;
+	QString s = QInputDialog::getText(this, tr("QInputDialog::getText()"),
+		tr("Size:"), QLineEdit::Normal,
+		QDir::home().dirName(), &ok);
+
+	QString p = QInputDialog::getText(this, tr("QInputDialog::getText()"),
+		tr("Parts:"), QLineEdit::Normal,
+		QDir::home().dirName(), &ok);
+
+	int parts = p.toInt();
+	string size = s.toStdString();
+
+	try {
+		vector<Turret> t_list = this->watchman.turret_list(size, parts);
+		this->ui.filter_list->clear();
+		for (auto turr : t_list)
+			this->ui.filter_list->addItem(QString::fromStdString(turr.get_location()));
+	}
+	catch (exception&) {
+		QMessageBox::critical(this, "Error", "No such turrets exist !");
+		return;
+	}
 }

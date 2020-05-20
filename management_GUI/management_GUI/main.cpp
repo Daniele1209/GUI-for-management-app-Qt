@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 	Watchman watch{ repo, repo2 };
 	Service service{ repo };
 
-	management_GUI gui{ service };
+	management_GUI gui{ watch, service };
 	gui.show();
 
 	return a.exec();
