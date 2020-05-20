@@ -22,6 +22,18 @@ void management_GUI::connect_signal_slots() {
 	QObject::connect(this->ui.delete_button, &QPushButton::clicked, this, &management_GUI::delete_turret);
 	QObject::connect(this->ui.update_button, &QPushButton::clicked, this, &management_GUI::update_turret);
 	QObject::connect(this->ui.exit_button, SIGNAL(clicked()), qApp, SLOT(quit()));
+	QObject::connect(this->ui.turret_list_widget, &QListWidget::itemSelectionChanged, [this]() {
+		int selected_index = this->get_selected();
+		if (selected_index < 0)
+			return;
+		Turret turr = this->service.get_turret()[selected_index];
+		this->ui.location_line->setText(QString::fromStdString(turr.get_location()));
+		this->ui.size_line->setText(QString::fromStdString(turr.get_size()));
+		this->ui.aura_level_line->setText(QString::fromStdString(to_string(turr.get_aura_level())));
+		this->ui.parts_line->setText(QString::fromStdString(to_string(turr.get_parts())));
+		this->ui.vision_line->setText(QString::fromStdString(turr.get_vision()));
+
+		});
 }
 
 void management_GUI::delete_turret() {
