@@ -1,7 +1,9 @@
 #include "watchman.h"
 #include <memory>
-#include "GUI.h"
 #include <QtWidgets/QApplication>
+#include "service.h"
+#include "management_GUI.h"
+
 using namespace std;
 
 int main(int argc, char *argv[]) {
@@ -12,7 +14,8 @@ int main(int argc, char *argv[]) {
 	Repository repo{};
 	Watchman watch{ repo, repo2 };
 	Service service{ repo };
-	GUI gui{ service , watch };
+
+	management_GUI gui{ service };
 	gui.show();
 
 	return a.exec();

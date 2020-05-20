@@ -6,4 +6,5 @@ center,hudge,600,1300,front gate
 levitating,large,400,890,stables
 east,huge,400,4000,tower
 west,medium,250,3200,tower
-south,meh,9000,30,tower
+south,chonky,9000,30,tower
+mircea,chonky,200,2,blind
