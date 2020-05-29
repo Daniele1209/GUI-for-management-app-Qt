@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="action.cpp" />
     <ClCompile Include="file_handle.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="main.cpp" />
@@ -100,6 +101,7 @@
     <QtRcc Include="management_GUI.qrc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="action.h" />
     <ClInclude Include="custom_exceptions.h" />
     <ClInclude Include="file_handle.h" />
     <ClInclude Include="GUI.h" />

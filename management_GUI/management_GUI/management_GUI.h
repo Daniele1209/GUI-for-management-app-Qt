@@ -7,6 +7,7 @@
 #include <qmessagebox.h>
 #include <QInputDialog>
 #include <QDir>
+#include <qshortcut>
 using namespace std;
 
 
@@ -21,6 +22,8 @@ private:
 	Service& service;
 	Watchman& watchman;
 	Ui::management_GUIClass ui;
+	QShortcut* undo;
+	QShortcut* redo;
 
 	int get_selected() const;
 
@@ -31,6 +34,9 @@ private:
 	void add_turret();
 	void update_turret();
 	bool validate_input(string location, string size, int aura_level, int parts, string vision);
+
+	void undo_function();
+	void redo_function();
 
 	//functions for user
 	void next_turret();

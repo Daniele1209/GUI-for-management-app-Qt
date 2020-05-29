@@ -21,4 +21,5 @@ public:
 	std::vector<Turret> get_turrets();
 	Turret find_turret(std::string location);
 	void delete_turret(Turret tur);
+	void update_turret(Turret tur);
 };

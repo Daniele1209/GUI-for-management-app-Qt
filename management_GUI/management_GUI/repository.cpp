@@ -50,6 +50,11 @@ void Repository::delete_turret(Turret tur) {
 	save_elements(turrets);
 }
 
+void Repository::update_turret(Turret tur) {
+	delete_turret(tur);
+	add_turret(tur);
+}
+
 vector<Turret> Repository::get_turrets() {
 	vector<Turret> turrets;
 	turrets = load_elements();

@@ -12,6 +12,9 @@ management_GUI::management_GUI(Watchman& w, Service& s, QWidget* parent)
 
 	//user
 	this->populate_mylist();
+	//initialize sortcuts for fct undo and redo
+	this->undo = new QShortcut(QKeySequence(QKeySequence::Undo), this);
+	this->redo = new QShortcut(QKeySequence(QKeySequence::Redo), this);
 }
 
 void management_GUI::populate_list() {
@@ -41,6 +44,11 @@ void management_GUI::connect_signal_slots() {
 	QObject::connect(this->ui.save_button, &QPushButton::clicked, this, &management_GUI::save_turret);
 	QObject::connect(this->ui.next_button, &QPushButton::clicked, this, &management_GUI::next_turret);
 	QObject::connect(this->ui.filter_button, &QPushButton::clicked, this, &management_GUI::filter_list);
+	QObject::connect(this->ui.undo_button, &QPushButton::clicked, this, &management_GUI::undo_function);
+	QObject::connect(this->ui.redo_button, &QPushButton::clicked, this, &management_GUI::redo_function);
+	QObject::connect(this->undo, &QShortcut::activated, this, &management_GUI::undo_function);
+	QObject::connect(this->redo, &QShortcut::activated, this, &management_GUI::redo_function);
+
 }
 
 void management_GUI::delete_turret() {
@@ -206,4 +214,24 @@ void management_GUI::filter_list() {
 		QMessageBox::critical(this, "Error", "No such turrets exist !");
 		return;
 	}
+}
+
+void management_GUI::undo_function() {
+	try {
+		this->service.undo();
+	}
+	catch (exception & e) {
+		QMessageBox::critical(this, "Error", e.what());
+	}
+	this->populate_list();
+}
+
+void management_GUI::redo_function() {
+	try {
+		this->service.redo();
+	}
+	catch (exception & e) {
+		QMessageBox::critical(this, "Error", e.what());
+	}
+	this->populate_list();
 }
