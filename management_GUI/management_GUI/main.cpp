@@ -12,8 +12,9 @@ int main(int argc, char *argv[]) {
 
 	watchman_CSV repo2{"Mylist.csv"};
 	Repository repo{};
+	Repository* saved{};
 	Watchman watch{ repo, repo2 };
-	Service service{ repo };
+	Service service{ repo , saved };
 
 	management_GUI gui{ watch, service };
 	gui.show();

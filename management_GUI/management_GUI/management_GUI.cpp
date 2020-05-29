@@ -7,14 +7,15 @@ management_GUI::management_GUI(Watchman& w, Service& s, QWidget* parent)
 {
 	ui.setupUi(this);
 	//admin
+	this->undo = new QShortcut(QKeySequence(QKeySequence::Undo), this);
+	this->redo = new QShortcut(QKeySequence(QKeySequence::Redo), this);
+
 	this->populate_list();
 	this->connect_signal_slots();
 
 	//user
 	this->populate_mylist();
-	//initialize sortcuts for fct undo and redo
-	this->undo = new QShortcut(QKeySequence(QKeySequence::Undo), this);
-	this->redo = new QShortcut(QKeySequence(QKeySequence::Redo), this);
+
 }
 
 void management_GUI::populate_list() {
@@ -220,7 +221,7 @@ void management_GUI::undo_function() {
 	try {
 		this->service.undo();
 	}
-	catch (exception & e) {
+	catch (exception& e) {
 		QMessageBox::critical(this, "Error", e.what());
 	}
 	this->populate_list();
@@ -230,7 +231,7 @@ void management_GUI::redo_function() {
 	try {
 		this->service.redo();
 	}
-	catch (exception & e) {
+	catch (exception& e) {
 		QMessageBox::critical(this, "Error", e.what());
 	}
 	this->populate_list();
