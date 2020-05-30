@@ -17,17 +17,8 @@ void Service::delete_turret_list(std::string command) {
 	Turret remove{ command, "", 0, 0, "" };
 	Turret tur = this->repo.find_turret(command);
 	this->repo.delete_turret(remove);
-	bool removed = true;
-	try {
-		this->saved->delete_turret(remove);
-	}
-	catch (exception& e) {
-		removed = false;
-	}
-	if(removed)
-		this->undo_stack.push_back(make_unique<Remove_action>(this->repo, tur, this->saved));
-	else
-		this->undo_stack.push_back(make_unique<Remove_action>(this->repo, tur));
+
+	this->undo_stack.push_back(make_unique<Remove_action>(this->repo, tur));
 	this->redo_stack.clear();
 }
 
@@ -48,17 +39,8 @@ void Service::update_list(const std::string& location, const std::string& size, 
 	Turret turret1 = this->repo.find_turret(location);
 	this->repo.delete_turret(tur);
 	this->repo.add_turret(tur);
-	bool update = true;
-	try {
-		this->saved->update_turret(tur);
-	}
-	catch (exception& e) {
-		update = false;
-	}
-	if(update)
-		this->undo_stack.push_back(make_unique<Update_action>(this->repo, turret1, tur, this->saved));
-	else
-		this->undo_stack.push_back(make_unique<Update_action>(this->repo, turret1, tur));
+
+	this->undo_stack.push_back(make_unique<Update_action>(this->repo, turret1, tur));
 	this->redo_stack.clear();
 }
 

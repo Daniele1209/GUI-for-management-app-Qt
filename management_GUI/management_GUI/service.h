@@ -8,12 +8,11 @@
 class Service {
 private:
 	Repository& repo;
-	Repository* saved;
 	vector<unique_ptr<Action>> undo_stack;
 	vector<unique_ptr<Action>> redo_stack;
 
 public:
-	Service(Repository& r, Repository* l) :repo{ r }, saved{ l } {}
+	Service(Repository& r) :repo{ r } {}
 	Repository& get_repo() const {
 		return repo;
 	}

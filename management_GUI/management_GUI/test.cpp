@@ -3,8 +3,7 @@
 
 void run_service_tests() {
 	Repository repo{};
-	Repository* saved{};
-	Service service{ repo, saved };
+	Service service{ repo };
 	service.new_path("file.txt");
 	service.add_turret_repo("loc1", "size", 100, 400, "loc");
 	assert(service.get_repo_size() == 10);
@@ -16,8 +15,7 @@ void run_service_tests() {
 
 void run_repo_services() {
 	Repository repo{};
-	Repository* saved{};
-	Service service{ repo, saved };
+	Service service{ repo };
 	Turret tur{ "south", "medium", 230, 2700, "tower" };
 	Turret tur2{ "loc1", "zise", 400, 4000, "loc" };
 	try {
@@ -55,8 +53,7 @@ void run_watchman_test() {
 	Repository repo{};
 	watchman_CSV list{ "Mylist.csv" };
 	Watchman watchman{ repo, list };
-	Repository* saved{};
-	Service service{ repo, saved };
+	Service service{ repo };
 	Turret tur{ "east", "hudge", 400, 4000, "tower" };
 	Turret tur2{ "south-west", "medium", 250, 400, "residential area" };
 	Turret tur3 = watchman.next();
