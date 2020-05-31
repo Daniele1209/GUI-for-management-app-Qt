@@ -89,6 +89,8 @@
     <ClCompile Include="service.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="turret.cpp" />
+    <ClCompile Include="TurretWidget.cpp" />
+    <ClCompile Include="Turret_model.cpp" />
     <ClCompile Include="watchman.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="management_GUI.ui" />
+    <QtUic Include="TurretWidget.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="management_GUI.qrc" />
@@ -109,6 +112,8 @@
     <ClInclude Include="service.h" />
     <ClInclude Include="test.h" />
     <ClInclude Include="turret.h" />
+    <QtMoc Include="TurretWidget.h" />
+    <ClInclude Include="Turret_model.h" />
     <ClInclude Include="watchman.h" />
     <ClInclude Include="x64\Debug\uic\ui_management_GUI.h" />
   </ItemGroup>

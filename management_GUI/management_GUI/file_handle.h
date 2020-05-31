@@ -24,7 +24,7 @@ public:
 	Turret turret_at_pos(int pos);
 	Turret find_turret(string location);
 	bool exists(string location);
-
+	vector<Turret> load_file();
 	vector<Turret> get_all();
 };
 
@@ -35,7 +35,7 @@ public:
 		f_path = "";
 	};
 	watchman_HTML(string path) { f_path = path; };
-	void save_file(const vector<Turret>& t) override;
+	void save_file(const vector<Turret>& t);
 };
 
 class watchman_CSV : public watchman_repo
@@ -45,5 +45,5 @@ public:
 		f_path = ""; 
 	};
 	watchman_CSV(string path) { f_path = path; };
-	void save_file(const vector<Turret>& t) override;
+	void save_file(const vector<Turret>& t);
 };

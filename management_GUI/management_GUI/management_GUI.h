@@ -8,6 +8,8 @@
 #include <QInputDialog>
 #include <QDir>
 #include <qshortcut>
+#include "TurretWidget.h"
+
 using namespace std;
 
 
@@ -44,4 +46,5 @@ private:
 	void filter_list();
 	void populate_mylist();
 	int get_selected_user() const;
+
 };

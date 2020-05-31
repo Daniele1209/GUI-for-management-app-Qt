@@ -8,3 +8,4 @@ east,huge,400,4000,tower
 west,medium,250,3200,tower
 south,chonky,9000,30,tower
 sowedewdew,chonky,9000,30,tower
+sccdsc,chonky,9000,30,tower

@@ -6,17 +6,17 @@
 using namespace std;
 
 Turret Watchman::next() {
-	index++;
-	if (index == repo.get_the_size())
-		index = 0;
-	if (repo.get_the_size() > index)
-		return repo.turret_at_pos(index);
+	this->index++;
+	if (this->index == this->repo.get_the_size())
+		this->index = 0;
+	if (this->repo.get_the_size() > this->index)
+		return this->repo.turret_at_pos(this->index);
 }
 
 void Watchman::add_turret_mylist(string elements) {
-	Turret turr = repo.find_turret(elements);
+	Turret turr = this->repo.find_turret(elements);
 
-	mylist.add_to_mylist(turr);
+	this->mylist.add_to_mylist(turr);
 }
 
 Turret Watchman::find_from_list(string location) {
@@ -51,3 +51,7 @@ vector<Turret> Watchman::get_turret_list() {
 	return this->mylist.get_all();
 }
 
+vector<Turret> Watchman::get_loaded() {
+	vector<Turret> turr = this->mylist.load_file();
+	return turr;
+}

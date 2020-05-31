@@ -5,34 +5,46 @@
 using namespace std;
 
 watchman_repo::watchman_repo(string path) {
-	f_path = path;
+	this->f_path = path;
+}
+
+vector<Turret> watchman_repo::load_file() {
+	vector<Turret> turrets_list;
+	Turret turr{};
+	ifstream fi(this->f_path);
+	while (fi >> turr) {
+		turrets_list.push_back(turr);
+	}
+	fi.close();
+
+	return turrets_list;
 }
 
 int watchman_repo::get_the_size() {
-	return turrets.size();
+	return this->turrets.size();
 }
 
 void watchman_repo::set_path(string path) {
-	f_path = path;
+	this->f_path = path;
 }
 
 void watchman_repo::add_to_mylist(Turret turr) {
-	for (auto turret : turrets)
+	for (auto turret : this->turrets)
 		if (turret.get_location() == turr.get_location())
 			throw repo_exception("Turret already in list !\n");
-	turrets.push_back(turr);
-	save_file(turrets);
+	this->turrets.push_back(turr);
+	save_file(this->turrets);
 }
 
 Turret watchman_repo::turret_at_pos(int pos) {
-	if (turrets.size() <= pos)
+	if (this->turrets.size() <= pos)
 		throw repo_exception("Turret not found ! :(\n");
 
-	return turrets[pos];
+	return this->turrets[pos];
 }
 
 Turret watchman_repo::find_turret(string location) {
-	for (auto turret : turrets)
+	for (auto turret : this->turrets)
 	{
 		if (turret.get_location() == location)
 			return turret;
@@ -41,7 +53,7 @@ Turret watchman_repo::find_turret(string location) {
 }
 
 bool watchman_repo::exists(string location) {
-	for (auto turr : turrets)
+	for (auto turr : this->turrets)
 		if (turr.get_location() == location)
 			return true;
 	return false;
@@ -86,12 +98,13 @@ void watchman_HTML::save_file(const vector<Turret>& t) {
 }
 
 void watchman_CSV::save_file(const vector<Turret>& t) {
-	if (f_path.size() == 0)
+	if (this->f_path.size() == 0)
 		throw repo_exception("File path for CSV not set !\n");
 	try {
-		ofstream of(f_path);
-		for (auto turret : turrets)
+		ofstream of(this->f_path);
+		for (auto turret : this->turrets) {
 			of << turret;
+		}
 		of.close();
 	}
 	catch (exception&) {
@@ -100,7 +113,11 @@ void watchman_CSV::save_file(const vector<Turret>& t) {
 }
 
 vector<Turret> watchman_repo::get_all() {
-	return turrets;
+
+	return this->turrets;
 }
+
+
+
 
 

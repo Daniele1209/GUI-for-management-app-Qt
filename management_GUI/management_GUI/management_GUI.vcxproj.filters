@@ -55,14 +55,26 @@
     <ClCompile Include="action.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TurretWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Turret_model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="management_GUI.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="TurretWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="management_GUI.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="TurretWidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -100,6 +112,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="action.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Turret_model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

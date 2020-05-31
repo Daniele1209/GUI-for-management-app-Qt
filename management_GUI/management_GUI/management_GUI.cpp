@@ -158,7 +158,7 @@ bool management_GUI::validate_input(string location, string size, int aura_level
 
 void management_GUI::populate_mylist() {
 	this->ui.mylist_list->clear();
-	vector<Turret> turrets = this->watchman.get_turret_list();
+	vector<Turret> turrets = this->watchman.get_loaded();
 	for (auto turr : turrets)
 		this->ui.mylist_list->addItem(QString::fromStdString(turr.get_location()));
 }
@@ -190,6 +190,7 @@ void management_GUI::save_turret() {
 	this->populate_mylist();
 	int last_elem = this->watchman.get_turret_list().size() - 1;
 	this->ui.turret_list_widget->setCurrentRow(last_elem);
+
 }
 
 void management_GUI::filter_list() {

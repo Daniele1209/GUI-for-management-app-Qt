@@ -1,2 +1,4 @@
-north-east,small,125,200,market
-north-west,medium,130,260,mountains
+south-west,medium,250,400,residential area
+south-east,large,350,700,forest
+center,hudge,600,1300,front gate
+levitating,large,400,890,stables
