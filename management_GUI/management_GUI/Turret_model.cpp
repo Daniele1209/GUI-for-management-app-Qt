@@ -35,18 +35,6 @@ QVariant Turret_model::data(const QModelIndex& index, int role) const {
 	return QVariant();
 }
 
-bool Turret_model::insertRows(int position, int rows, const QModelIndex& parentIndex) {
-	Q_ASSERT(checkIndex(parentIndex));
-	if (position<0 || position>rowCount(parentIndex) || rows <= 0)
-		return false;
-	emit layoutAboutToBeChanged();
-	beginInsertRows(parentIndex, position, position + rows - 1);
-	endInsertRows();
-	emit layoutChanged();
-
-	return true;
-}
-
 QVariant Turret_model::headerData(int section, Qt::Orientation orientation, int role) const {
 	if (role == Qt::DisplayRole) {
 		if (orientation == Qt::Horizontal) {

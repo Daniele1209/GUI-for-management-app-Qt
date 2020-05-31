@@ -191,6 +191,7 @@ void management_GUI::save_turret() {
 	int last_elem = this->watchman.get_turret_list().size() - 1;
 	this->ui.turret_list_widget->setCurrentRow(last_elem);
 
+
 }
 
 void management_GUI::filter_list() {
